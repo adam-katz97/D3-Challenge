@@ -13,25 +13,34 @@ var svg = d3.select("#scatter").append("svg").attr("height", svgHeight).attr("wi
 var chartGroup = svg.append("g").attr("transform", `translate(${chartMargin.left}, ${chartMargin.top})`);
 
 d3.csv("assets/data/data.csv").then((data)=> {
-    console.log(data.length);
+    console.log(data);
+    obData.forEach(function (data){
+        data.income = +data.income
+        data.obesity = +data.obesity
+    })
+    var xLinearScale = d3.scaleLinear()
+    .domain([20, d3.max(
+      obData.map(function (d) { 
+        return d.income;
+      })
+    )]
+    )
+    .range([0, width]);
     
-    show(data);
+    var yLinearScale = d3.scaleLinear()
+    .domain([0, d3.max(obData.map(
+      function (d) {
+        return d.obesity;
+      }
+    ))]
+    )
+    .range([height, 0]);
+
+
+
+    
 }).catch(function(error) {
     console.log(error);
   });
   
 
-function show(data){
-    var inc = [];
-    var ob = []; 
-    abv=[]
-    for (i=0; i<data.length; i++){
-        inc.push(data[i].income)
-        ob.push(data[i].obesity)
-        abv.push(data[i].abbr)
-    }
-    console.log(inc)
-    console.log(ob)
-    console.log(abv)
-
-}
