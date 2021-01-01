@@ -19,14 +19,14 @@ d3.csv("assets/data/data.csv").then((data)=> {
         data.obesity = +data.obesity
     })
     var xLinearScale = d3.scaleLinear()
-    .domain([20, d3.max(
+    .domain([0, d3.max(
       obData.map(function (d) { 
         return d.income;
       })
     )]
     )
     .range([0, width]);
-    
+
     var yLinearScale = d3.scaleLinear()
     .domain([0, d3.max(obData.map(
       function (d) {
