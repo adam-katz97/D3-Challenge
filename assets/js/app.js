@@ -1,11 +1,11 @@
 // @TODO: YOUR CODE HERE!
 var svgWidth = 500;
-var svgHeight = 500;
+var svgHeight = 550;
 var chartMargin = {
     top: 30,
     right: 30,
-    bottom: 30,
-    left: 30
+    bottom: 100,
+    left: 50
     };
 var width = svgWidth - chartMargin.left - chartMargin.right;
 var height = svgHeight - chartMargin.top - chartMargin.bottom;
@@ -55,23 +55,29 @@ d3.csv("assets/data/data.csv").then((data)=> {
     .attr("r", "15")
     .attr("fill", "blue")
     .attr("opacity", ".5")
-    .attr("ct", function(d){
-      return d.abbr
-    });
-    
+    .append("text")
+    .attr("dx", function(d) {
+      return xLinearScale(d.income);
+    })
+    .attr("dy", function(d) { 
+      return yLinearScale(d.obesity);
+    })
+    .text(function (data){
+      return data.abbr
+    })
     
     chartGroup.append("text")
     .attr("transform", "rotate(-90)")
-    .attr("y", 0 - chartMargin.left - 10)
+    .attr("y", 0 - chartMargin.left - 3)
     .attr("x", 0 - (height / 2))
     .attr("dy", "1em")
     .attr("class", "axisText")
-    .text("Income of state");
+    .text("Obesity");
 
     chartGroup.append("text")
     .attr("transform", `translate(${width / 2}, ${height + chartMargin.top + 30})`)
     .attr("class", "axisText")
-    .text("Obesity");
+    .text("Income");
 
 
 
