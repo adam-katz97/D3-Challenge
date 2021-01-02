@@ -17,6 +17,7 @@ d3.csv("assets/data/data.csv").then((data)=> {
     data.forEach(function (data){
         data.income = +data.income
         data.obesity = +data.obesity
+        data.abbr = +data.abbr
     })
     
     var xLinearScale = d3.scaleLinear()
@@ -41,6 +42,39 @@ d3.csv("assets/data/data.csv").then((data)=> {
     chartGroup.append("g").attr("transform", `translate(0, ${height})`).call(bottomAxis);
 
     chartGroup.append("g").call(leftAxis);
+    var circlesGroup = chartGroup.selectAll("circle")
+    .data(data)
+    .enter()
+    .append("circle")
+    .attr("cx", function(d) {
+      return xLinearScale(d.income);
+    })
+    .attr("cy", function(d) { 
+      return yLinearScale(d.obesity);
+    })
+    .attr("r", "15")
+    .attr("fill", "blue")
+    .attr("opacity", ".5")
+    .attr("ct", function(d){
+      return d.abbr
+    });
+    
+    
+    chartGroup.append("text")
+    .attr("transform", "rotate(-90)")
+    .attr("y", 0 - chartMargin.left - 10)
+    .attr("x", 0 - (height / 2))
+    .attr("dy", "1em")
+    .attr("class", "axisText")
+    .text("Income of state");
+
+    chartGroup.append("text")
+    .attr("transform", `translate(${width / 2}, ${height + chartMargin.top + 30})`)
+    .attr("class", "axisText")
+    .text("Obesity");
+
+
+
 
 
 
