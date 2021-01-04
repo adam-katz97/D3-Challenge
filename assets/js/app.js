@@ -14,11 +14,14 @@ var chartGroup = svg.append("g").attr("transform", `translate(${chartMargin.left
 
 d3.csv("assets/data/data.csv").then((data)=> {
     console.log(data);
+    
     data.forEach(function (data){
         data.income = +data.income
         data.obesity = +data.obesity
-        data.abbr = +data.abbr
+        data.abbr = String(data.abbr)
+        
     })
+    console.log(data.income)
     
     var xLinearScale = d3.scaleLinear()
     .domain([0, d3.max(
@@ -55,17 +58,25 @@ d3.csv("assets/data/data.csv").then((data)=> {
     .attr("r", "15")
     .attr("fill", "blue")
     .attr("opacity", ".5")
-    .append("text")
-    .attr("dx", function(d) {
-      return xLinearScale(d.income);
+    // .append("text")
+    .text(function(d){
+      return d.abbr
     })
-    .attr("dy", function(d) { 
-      return yLinearScale(d.obesity);
-    })
-    .text(function (data){
-      return data.abbr
-    })
+    // .append("text")
+    // .attr("dx", function(d) {
+    //   return xLinearScale(d.income);
+    // })
+    // .attr("dy", function(d) { 
+    //   return yLinearScale(d.obesity);
+    // })
+    // .text(function (data){
+    //   return data.abbr
+    // })
+
     
+    
+
+
     chartGroup.append("text")
     .attr("transform", "rotate(-90)")
     .attr("y", 0 - chartMargin.left - 3)
