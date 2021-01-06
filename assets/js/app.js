@@ -45,33 +45,39 @@ d3.csv("assets/data/data.csv").then((data)=> {
     chartGroup.append("g").attr("transform", `translate(0, ${height})`).call(bottomAxis);
 
     chartGroup.append("g").call(leftAxis);
-    var circlesGroup = chartGroup.selectAll("circle")
+    var circlesGroup = chartGroup.selectAll("g circle")
     .data(data)
-    .enter()
+    .enter();
+
+    circlesGroup
     .append("circle")
+    .classed("stateCircle", true)
     .attr("cx", function(d) {
       return xLinearScale(d.income);
     })
     .attr("cy", function(d) { 
       return yLinearScale(d.obesity);
     })
-    .attr("r", "15")
-    .attr("fill", "blue")
-    .attr("opacity", ".5")
-    // .append("text")
-    .text(function(d){
-      return d.abbr
+    .attr("r", "15");
+
+    
+    circlesGroup
+    .append("text")
+    .classed("stateText", true)
+    .attr("dx", function(d) {
+      console.log(d.income)
+      return xLinearScale(d.income);
     })
-    // .append("text")
-    // .attr("dx", function(d) {
-    //   return xLinearScale(d.income);
-    // })
-    // .attr("dy", function(d) { 
-    //   return yLinearScale(d.obesity);
-    // })
-    // .text(function (data){
-    //   return data.abbr
-    // })
+    .attr("dy", function(d) { 
+      console.log(d.obesity)
+      return yLinearScale(d.obesity)+6;
+    })
+    .text(function(d){
+      return (d.abbr)
+    })
+    .attr("text-size", 15);
+
+ 
 
     
     
